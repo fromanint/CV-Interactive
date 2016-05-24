@@ -79,7 +79,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         public Camera cam;
         public MovementSettings movementSettings = new MovementSettings();
-        public MouseLook mouseLook = new MouseLook();
+		public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
 
 
@@ -222,7 +222,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         }
 
 
-        private void RotateView()
+        public void RotateView()
         {
             //avoids the mouse looking if the game is effectively paused
             if (Mathf.Abs(Time.timeScale) < float.Epsilon) return;
