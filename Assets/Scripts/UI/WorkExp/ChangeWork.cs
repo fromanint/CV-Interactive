@@ -2,6 +2,8 @@
 using System.Collections;
 using UnityEngine.UI;
 
+
+[RequireComponent(typeof(Animator))]
 public class ChangeWork : MonoBehaviour {
 
     [SerializeField] GameObject Next;
@@ -18,7 +20,8 @@ public class ChangeWork : MonoBehaviour {
         getData();
         setArray();
         setData();
-
+		UpdateInfo (Actual, index);
+		UpdateInfo (Next, index+1);
     }
     void setArray()
     {
@@ -33,8 +36,8 @@ public class ChangeWork : MonoBehaviour {
         int i = 0;
         Jobs[i] = new JobDes(
             "May 2015 - Present",
-            "Game Designer / Software Developer",
-            "Froman Interactive" + "www.fromaninteractive.com",
+            "Game Designer / Developer",
+            "Froman Interactive" + " www.fromaninteractive.com",
             "Multimedia / Self Employed",
             "Create prototypes, designs and development of multimedia projects from the idea to the launch, using as main tool Unity 3D.",
             "•	Nostrum Expirence is a Augmenter Realty app developed  for Nostrum(Barcelona, Spain)  in 3 months.\n" +
@@ -44,7 +47,7 @@ public class ChangeWork : MonoBehaviour {
 
         Jobs[++i] = new JobDes(
             "February 2014 - August 2014",
-            "Game Designer / Software Developer",
+            "Game Designer / Developer",
             "Holoplab",
             "Multimedia / Final Poject",
             "Add to a transmedia World used in CIMA Foundation and Aliavox Books some multimedia objects.",
@@ -67,7 +70,7 @@ public class ChangeWork : MonoBehaviour {
      
         Jobs[++i] = new JobDes(
               "June 2011 – March 2012",
-              "Software Designer / Software Developer",
+              "Software Designer / Developer",
               "Grupo Bryfel S.A. de C.V.",
               "Textile Industry",
               "Design and develop software to automatize some process",
@@ -94,27 +97,49 @@ public class ChangeWork : MonoBehaviour {
 
     public void PreviousJob()
     {
-        if (index <= 0)
-        {
-            index = Jobs.Length - 1;
-        }
+		UpdateInfo (Next, index);
+		if (index <= 1) {
+			index = Jobs.Length - 1;
+		} else {
+			index--;
+		}
+
+		GetComponent<Animator> ().SetTrigger ("Previous");
+		UpdateInfo (Actual, index);
+	
+
     }
 
-    public void NextJob()
-    {
-        if ((index + 1) >= Jobs.Length)
-        {
-            index = 0;
-        }
+	public void NextJob()
+	{
+		GetComponent<Animator> ().SetTrigger ("Next");
+		if ((index + 1) >= Jobs.Length) {
+			index = 0;
+		} else {
+			index++;
+		}
+		StartCoroutine ("WaitForAnimation");
+
     }
 
-    void UpdateInfo(GameObject go, int i) {
+	IEnumerator WaitForAnimation ()
+	{
+		yield return new WaitForSeconds(1);
+		UpdateInfo (Actual, index);
+		if (index + 1 >= Jobs.Length) {
+			UpdateInfo (Next, 0);
+		} else {
+			UpdateInfo (Next, index+1);
+		}
+	}
+
+	void UpdateInfo(GameObject go, int i) {
         go.transform.Find("Date").GetComponent<Text>().text = Jobs[i].Date;
         go.transform.Find("Role").GetComponent<Text>().text = Jobs[i].Role;
         go.transform.Find("Enterprise").GetComponent<Text>().text = Jobs[i].Enterprise;
         go.transform.Find("Category").GetComponent<Text>().text = Jobs[i].Category;
         go.transform.Find("Place").GetComponent<Text>().text = Jobs[i].Place;
-        go.transform.Find("Description").GetComponent<Text>().text = Jobs[i].Description;
+		go.transform.Find("Description").GetComponent<Text>().text = Jobs[i].Description;
         go.transform.Find("Achivements").GetComponent<Text>().text = Jobs[i].Achivements;
 
     }
