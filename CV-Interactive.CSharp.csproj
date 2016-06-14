@@ -88,7 +88,7 @@
     <Compile Include="Assets\Scripts\Guided.cs" />
     <Compile Include="Assets\Scripts\LockMouse.cs" />
     <Compile Include="Assets\Scripts\Presentation.cs" />
-    <Compile Include="Assets\Scripts\UI\Portafolio\SetMovieText.cs" />
+    <Compile Include="Assets\Scripts\UI\Portafolio\PortfolioItem.cs" />
     <Compile Include="Assets\Scripts\UI\WorkExp\ChangeWork.cs" />
     <Compile Include="Assets\Scripts\UI\WorkExp\JobDes.cs" />
   </ItemGroup>
